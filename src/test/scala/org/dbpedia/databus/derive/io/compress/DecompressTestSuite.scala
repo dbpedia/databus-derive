@@ -47,7 +47,7 @@ class DecompressTestSuite extends FunSuite with BeforeAndAfterAll {
 
   test("bzip2 decompression line count") {
 
-    val linesIn = Process(Seq("bash", "-c", s"lbzcat ${testFile.getAbsolutePath} | wc -l")).!!
+    val linesIn = Process(Seq("bash", "-c", s"bzcat ${testFile.getAbsolutePath} | wc -l")).!!
     val linesOut = Process(Seq("bash", "-c", s"cat ${testSink.getAbsolutePath} | wc -l")).!!
 
     assert(linesOut == linesIn, "Decompressed file should have same line count as the compressed file")
