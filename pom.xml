@@ -301,6 +301,10 @@
                             <id>databusclient</id>
                             <mainClass>org.dbpedia.databus.client.main.Main</mainClass>
                         </launcher>
+                        <launcher>
+                            <id>flatRdfParser</id>
+                            <mainClass>org.dbpedia.databus.derive.cli.NTripleParserCLI</mainClass>
+                        </launcher>
                     </launchers>
                     <args>
                         <arg>-nobootcp</arg>
