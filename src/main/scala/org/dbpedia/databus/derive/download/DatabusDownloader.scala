@@ -1,10 +1,11 @@
 package org.dbpedia.databus.derive.download
 
 import java.net.URL
-
 import better.files.File
 import org.apache.jena.iri.IRI
 import org.apache.jena.query.{Query, QueryExecutionFactory, QueryFactory}
+import org.apache.jena.sparql.exec.http.QueryExecutionHTTP
+import org.apache.spark.sql.execution.QueryExecution
 import org.dbpedia.databus.sparql.DataidQueries
 
 object DatabusDownloader {
@@ -18,9 +19,9 @@ object DatabusDownloader {
     val artifact = versionParts(versionParts.length - 2)
     val hasVersion = versionParts.last
 
-    System.err.println(s"[INFO] download $version");
+    System.err.println(s"[INFO] download $version")
     val query: Query = QueryFactory.create(DataidQueries.queryVersionDownloadUrls(version.toString))
-    val queryExec = QueryExecutionFactory.sparqlService(endpoint, query)
+    val queryExec = QueryExecutionHTTP.service(endpoint, query)
     val resultSet = queryExec.execSelect()
     val querySolution = resultSet.next()
 

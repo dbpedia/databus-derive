@@ -1,7 +1,7 @@
 package org.dbpedia.databus.derive.cli
 
 import better.files.File
-import org.apache.jena.riot.system.IRIResolver
+import org.apache.jena.iri.IRIFactory
 import org.dbpedia.databus.derive.download.DatabusDownloader
 import scopt.{OptionParser, Read}
 
@@ -53,7 +53,7 @@ object DatabusDownloadCLI {
         pool.foreach( version =>
 
           DatabusDownloader.cloneVersionToDirectory(
-            version = IRIResolver.iriFactory().construct(version),
+            version = IRIFactory.iriImplementation().construct(version),
             directory = config.downloadDirectory,
             skipFilesIfExists = config.skipIfExists
           )

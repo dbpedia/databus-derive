@@ -1,11 +1,10 @@
 package org.dbpedia.databus.derive.mojo
 
 import java.{io, util}
-
 import better.files
 import better.files.File
 import org.apache.commons.io.FileUtils
-import org.apache.jena.riot.system.IRIResolver
+import org.apache.jena.iri.IRIFactory
 import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugins.annotations._
 import org.dbpedia.databus.derive.cli.NTripleParserCLI.parseFile
@@ -141,7 +140,7 @@ class CloneGoal extends AbstractMojo {
       versions.asScala.foreach(versionStr => {
 
         System.err.println(s"[INFO] Looking for version: $versionStr")
-        val versionIRI = IRIResolver.iriFactory().construct(versionStr)
+        val versionIRI = IRIFactory.iriImplementation().construct(versionStr)
 
         DatabusDownloader.cloneVersionToDirectory(
           version = versionIRI,

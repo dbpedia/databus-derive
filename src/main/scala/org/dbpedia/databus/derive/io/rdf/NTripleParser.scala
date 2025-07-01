@@ -211,7 +211,7 @@ extends BufferedErrorHandler[Triple,Long]( reportBuffer, violatedRowsBuffer ) wi
   }
 
   def appendReportBuffer(s: Node,p: Node,o: Node): Unit = {
-    reportBuffer.append(new org.apache.jena.graph.Triple(s,p,o))
+    reportBuffer.append(Triple.create(s,p,o))
   }
 
   def sha256FromString(string: String): String = {

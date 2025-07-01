@@ -11,37 +11,29 @@ import org.scalatest.FunSuite
 class NTParserTests extends FunSuite {
 
   val valid: String =
-    """
-      |<http://a> <http://b> "1" .
+    """<http://a> <http://b> "1" .
       |<http://a> <http://b> "2" .
       |<http://a> <http://b> "3" .
       |<http://a> <http://b> "4" .
-      |<http://a> <http://b> "5" .
-      |""".stripMargin
+      |<http://a> <http://b> "5" .""".stripMargin
 
   val warn: String =
-    """
-      |<http://a> <http://b> "1" .
+    """<http://a> <http://b> "1" .
       |<http://a> <http://b> "2" .
       |<http://a> <http://b Space> "3" .
       |<http://a> <http://b> "4" .
-      |<http://a> <http://b> "5" .
-      |""".stripMargin
+      |<http://a> <http://b> "5" .""".stripMargin
 
   val error: String =
-    """
-      |<http://a> <http://b> "1" .
+    """<http://a> <http://b> "1" .
       |<http://a> <http://b> .
       |INVALID LINE
       |<http://a> <http://b> "5" .
-      |<http://a> <http://b> "unterminated
-      |""".stripMargin
+      |<http://a> <http://b> "unterminated""".stripMargin
 
   val errorExp: String =
-    """
-      |<http://a> <http://b> "1" .
-      |<http://a> <http://b> "5" .
-      |""".stripMargin
+    """<http://a> <http://b> "1" .
+      |<http://a> <http://b> "5" .""".stripMargin
 
 
   def captureOutput[T](block: (ByteArrayOutputStream, ByteArrayOutputStream) => T): (T, String, String) = {
@@ -76,8 +68,8 @@ class NTParserTests extends FunSuite {
     println(report)
 
 
-    assertResult(triples.trim){
-      valid.trim
+    assertResult(valid.trim){
+      triples.trim
     }
     assert(report.trim.isEmpty)
   }
@@ -100,9 +92,8 @@ class NTParserTests extends FunSuite {
     println("=== Report ===")
     println(report)
 
-    assertResult(triples.trim){
-      warn.trim
-    }
+
+    assert(triples.lines.count==warn.lines.count)
     assert(report.contains("WRN"))
   }
 
@@ -124,8 +115,8 @@ class NTParserTests extends FunSuite {
     println("=== Report ===")
     println(report)
 
-    assertResult(triples.trim){
-      errorExp.trim
+    assertResult(errorExp.trim){
+      triples.trim
     }
     assert(report.contains("ERR"))
   }

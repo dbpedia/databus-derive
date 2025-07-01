@@ -4,7 +4,7 @@ import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
-import org.apache.jena.iri.IRI;
+import org.apache.jena.irix.IRIx;
 import org.apache.jena.riot.system.*;
 import org.apache.jena.riot.tokens.Token;
 import org.apache.jena.sparql.core.Quad;
@@ -43,6 +43,12 @@ class NoErrorProfile implements ParserProfile {
     }
 
     @Override
+    public Node createURI(IRIx irIx, long l, long l1) {
+        //TODO
+        return null;
+    }
+
+    @Override
     public Node createTypedLiteral(String lexical, RDFDatatype datatype, long line, long col) {
         return base.createTypedLiteral(lexical, datatype, line, col);
     }
@@ -50,6 +56,12 @@ class NoErrorProfile implements ParserProfile {
     @Override
     public Node createLangLiteral(String lexical, String langTag, long line, long col) {
         return base.createLangLiteral(lexical, langTag, line, col);
+    }
+
+    @Override
+    public Node createLangDirLiteral(String s, String s1, String s2, long l, long l1) {
+        //TODO
+        return null;
     }
 
     @Override
@@ -68,7 +80,19 @@ class NoErrorProfile implements ParserProfile {
     }
 
     @Override
+    public Node createTripleTerm(Node node, Node node1, Node node2, long l, long l1) {
+        //TODO
+        return null;
+    }
+
+    @Override
     public Node createTripleNode(Node node, Node node1, Node node2, long l, long l1) {
+        return null;
+    }
+
+    @Override
+    public Node createTripleTerm(Triple triple, long l, long l1) {
+        //TODO
         return null;
     }
 
@@ -95,6 +119,11 @@ class NoErrorProfile implements ParserProfile {
     @Override
     public boolean isStrictMode() {
         return false;
+    }
+
+    @Override
+    public String getBaseURI() {
+        return "";
     }
 
     @Override

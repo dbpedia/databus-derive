@@ -107,7 +107,7 @@ public final class LangNTriplesSkipBad implements Iterator<TripleWrapper>
 
                 Token oToken = nextToken();
                 if (oToken.isEOF()) exception(oToken, "Premature end of file: %s", oToken);
-                needSkip = true; checkRDFTerm(oToken); needSkip = false;
+                needSkip = true; checkRDFTerm("object", oToken); needSkip = false;
 
                 Token x = nextToken();
                 if (x.getType() != TokenType.DOT) exception(x, "Triple not terminated by DOT: %s", x);
