@@ -147,8 +147,10 @@ class BufferedTextReportsEH( rawLines: Array[String],
   }
 
   override def error(message: String, line: Long, col: Long): Unit = {
-    reportBuffer.append(s"${rawLines(line.toInt-1)} # ERR@$col $message")
+    val safeLine = rawLines.lift((line - 1).toInt).getOrElse(s"[Line $line not available]")
+    reportBuffer.append(s"$safeLine # ERR@$col $message")
   }
+
 
   override def fatal(message: String, line: Long, col: Long): Unit = {
     reportBuffer.append(s"${rawLines(line.toInt-1)} # FTL@$col $message")
