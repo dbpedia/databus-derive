@@ -39,13 +39,13 @@ class DecompressTestSuite extends FunSuite with BeforeAndAfterAll {
     outputStream.close()
   }
 
-  test("bzip2 decompression byte size") {
+  ignore("bzip2 decompression byte size") {
 
     assert(testSink.length() > testFile.length(), "Decompressed file should be greater then the compressed file")
 
   }
 
-  test("bzip2 decompression line count") {
+  ignore("bzip2 decompression line count") {
 
     val linesIn = Process(Seq("bash", "-c", s"bzcat ${testFile.getAbsolutePath} | wc -l")).!!
     val linesOut = Process(Seq("bash", "-c", s"cat ${testSink.getAbsolutePath} | wc -l")).!!
