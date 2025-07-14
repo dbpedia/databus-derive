@@ -6,6 +6,7 @@ import java.net.URLEncoder
 import java.security.MessageDigest
 import net.sansa_stack.rdf.benchmark.io.ReadableByteChannelFromIterator
 import net.sansa_stack.rdf.common.io.riot.tokens.TokenizerTextForgiving
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream
 import org.apache.jena.atlas.io.PeekReader
 import org.apache.jena.datatypes.xsd.XSDDatatype
 import org.apache.jena.graph.{Node, NodeFactory, Triple}
@@ -26,28 +27,42 @@ object NTParser {
   protected val ByteInputBufferSize: Int = 32 * 1024 //64 * 1024
 
   def parse(
-             tripleInput: InputStream,
-             tripleOutput: OutputStream,
-             reportOutput: OutputStream,
+             tripleInputPath: String,
+             tripleOutputPath: String,
+             reportOutputPath: String,
              chunk: Int = 10000,
-             reportFormat: ReportFormat.Value = ReportFormat.TEXT,
+             reportFormat: String = "TEXT",
              removeWarnings: Boolean = false
            ): Unit = {
+
+
+    var tripleInput: InputStream = null
+
+    if(tripleInputPath.endsWith(".bz2")){
+      tripleInput = new BZip2CompressorInputStream(new BufferedInputStream(new FileInputStream(tripleInputPath)))
+    }else{
+      tripleInput = new BufferedInputStream(new FileInputStream(tripleInputPath))
+    }
+
+    val tripleOutput = new FileOutputStream(tripleOutputPath)
+    val reportOutput = new FileOutputStream(reportOutputPath)
 
     val reader = new BufferedReader(new InputStreamReader(tripleInput, StandardCharsets.UTF_8))
     val linesBuffer = new scala.collection.mutable.ArrayBuffer[String](chunk)
     var line: String = null
 
+    val reportFormatE = ReportFormat.withName(reportFormat)
+
     while ({ line = reader.readLine(); line != null }) {
       linesBuffer.append(line)
       if (linesBuffer.size >= chunk) {
-        processChunk(linesBuffer, tripleOutput, reportOutput, reportFormat, removeWarnings)
+        processChunk(linesBuffer, tripleOutput, reportOutput, reportFormatE, removeWarnings)
         linesBuffer.clear()
       }
     }
 
     if (linesBuffer.nonEmpty) {
-      processChunk(linesBuffer, tripleOutput, reportOutput, reportFormat, removeWarnings)
+      processChunk(linesBuffer, tripleOutput, reportOutput, reportFormatE, removeWarnings)
       linesBuffer.clear()
     }
 

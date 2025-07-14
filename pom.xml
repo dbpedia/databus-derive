@@ -99,7 +99,7 @@
 [INFO] |  |  |  |  \- org.aksw.sparqlify:obda-api-core:jar:0.8.5:compile
 [INFO] |  |  |  \- org.aksw.sparqlify:obda-api-sml:jar:0.8.5:compile
 [INFO] |  |  +- org.aksw.sparqlify:sparqlify-type-system:jar:0.8.5:compile
-        
+
         -->
         <dependency>
             <groupId>net.sansa-stack</groupId>
@@ -125,12 +125,12 @@
                 <exclusion>
                     <groupId>org.apache.jena</groupId>
                     <artifactId>jena-core</artifactId>
-<!--                    3.11.0-->
+                    <!--                    3.11.0-->
                 </exclusion>
                 <exclusion>
                     <groupId>org.apache.jena</groupId>
                     <artifactId>jena-arq</artifactId>
-<!--                    3.11.0-->
+                    <!--                    3.11.0-->
                 </exclusion>
             </exclusions>
         </dependency>
@@ -384,7 +384,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <minimizeJar>true</minimizeJar>
+                            <minimizeJar>false</minimizeJar>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
@@ -403,12 +403,6 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                             </transformers>
-                            <!--Excludes gson for compatibility reasons. Fixes the ambiguous classpath error-->
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>com.google.code.gson</exclude>
-                                </excludes>
-                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>

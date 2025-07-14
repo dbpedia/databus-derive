@@ -12,20 +12,13 @@ object Main {
     val outputTriplesPath = "output-triples.nt"
     val outputReportPath = "output-report.txt"
 
-    val inputStream = new BZip2CompressorInputStream(new BufferedInputStream(new FileInputStream(inputPath)))
-    val tripleOutputStream = new FileOutputStream(outputTriplesPath)
-    val reportOutputStream = new FileOutputStream(outputReportPath)
-
     try {
       println(s"Parsing RDF data from $inputPath...")
 
       org.dbpedia.utils.parser.NTParser.parse(
-        tripleInput = inputStream,
-        tripleOutput = tripleOutputStream,
-        reportOutput = reportOutputStream,
-        chunk = 10000,
-        reportFormat = ReportFormat.TEXT,
-        removeWarnings = false
+        inputPath,
+        outputTriplesPath,
+        outputReportPath
       )
 
       println(s"Parsing complete. Results written to:")
@@ -36,10 +29,6 @@ object Main {
       case ex: Exception =>
         System.err.println("Error while parsing RDF-Data:")
         ex.printStackTrace()
-    } finally {
-      inputStream.close()
-      tripleOutputStream.close()
-      reportOutputStream.close()
     }
   }
 }
