@@ -36,6 +36,8 @@ object NTParser {
            ): Unit = {
 
 
+    val start = System.currentTimeMillis()
+
     var tripleInput: InputStream = null
 
     if(tripleInputPath.endsWith(".bz2")){
@@ -66,6 +68,7 @@ object NTParser {
       linesBuffer.clear()
     }
 
+    println("Done... Time: " + (System.currentTimeMillis()-start)/1000 + " Seconds")
     reader.close()
     tripleOutput.flush()
     reportOutput.flush()

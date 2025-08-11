@@ -129,3 +129,19 @@ cd databus-derive/ && mvn clean install
 wget http://dbpedia-mappings.tib.eu/release/mappings/mappingbased-literals/2019.10.01/mappingbased-literals_lang\=de.ttl.bz2
 ./flatRdfParser mappingbased-literals_lang=de.ttl.bz2 --discard-warnings > mappingbased-literals_lang=de_cleaned.ttl
 ```
+
+# Run NT-Parser with Docker
+Put your files in the ntfiles folder or mount a volume manually
+```bash
+mvn clean package
+docker build -t ntparser .
+docker run \
+  ntparser \
+  --input ntfiles/test.nt.bz2 \
+  --triples output-triples.nt \
+  --report output-report.txt \
+  --chunk 5000 \
+  --reportFormat TEXT \
+  --removeWarnings
+
+```
