@@ -130,7 +130,12 @@ wget http://dbpedia-mappings.tib.eu/release/mappings/mappingbased-literals/2019.
 ./flatRdfParser mappingbased-literals_lang=de.ttl.bz2 --discard-warnings > mappingbased-literals_lang=de_cleaned.ttl
 ```
 
-# Run NT-Parser with Docker
+# Run NT-Parser with Python
+
+## Locally
+
+see [src/main/python/README.md](src/main/python/README.md)
+## With Docker
 Put your files in the ntfiles folder or mount a volume manually
 ```bash
 mvn clean package
